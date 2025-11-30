@@ -1,4 +1,4 @@
-🎓 Projet Académique — Système de Gestion des Employés
+# 🎓 Projet Académique — Système de Gestion des Employés
 
 Application web de gestion d'employés avec MongoDB, Node.js et MapReduce.
 
@@ -70,7 +70,7 @@ Application web de gestion d'employés avec MongoDB, Node.js et MapReduce.
 
 1. **Cloner le projet**
 ```bash
-git clone <url-du-repo>
+git clone https://github.com/Imeed0/Projet-Acad-mique-Syst-me-de-Gestion-des-Employ-s.git
 cd Projet_Emp
 ```
 
