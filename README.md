@@ -27,36 +27,36 @@ Application web de gestion d'employés avec MongoDB, Node.js et MapReduce.
 ## 🖼️ Aperçu de l'application
 
 ### Écran d'accueil
-![Écran d'accueil](screenshots/accueil.png)
+![Écran d'accueil](Screenshots/accueil.png)
 
 ### Interface de connexion
-![Interface de connexion](screenshots/connexion.png)
+![Interface de connexion](Screenshots/connexion.png)
 
 ### Tableau de bord principal
-![Dashboard - Vue 1](screenshots/Dashboard1.png)
-![Dashboard - Vue 2](screenshots/Dashboard2.png)
+![Dashboard - Vue 1](Screenshots/Dashboard1.png)
+![Dashboard - Vue 2](Screenshots/Dashboard2.png)
 
 ### Gestion des employés
 
 #### Ajout d'un employé
-![Formulaire d'ajout](screenshots/ajout_emp.png)
+![Formulaire d'ajout](Screenshots/ajout_emp.png)
 
 #### Modification d'un employé
-![Formulaire de modification](screenshots/modif_emp.png)
+![Formulaire de modification](Screenshots/modif_emp.png)
 
 ### Opérations sur les primes
-![Incrémentation des primes](screenshots/increm_primes.png)
+![Incrémentation des primes](Screenshots/increm_primes.png)
 
 ### Analyses MapReduce
 
 #### Prime moyenne par ville
-![MapReduce - Prime moyenne](screenshots/exemple_mapreduce_primemoy_par_ville.png)
+![MapReduce - Prime moyenne](Screenshots/exemple_mapreduce_primemoy_par_ville.png)
 
 #### MapReduce personnalisé
-![MapReduce personnalisé](screenshots/mapreduce_perso.png)
+![MapReduce personnalisé](Screenshots/mapreduce_perso.png)
 
 ### Déconnexion
-![Confirmation de déconnexion](screenshots/deconnexion.png)
+![Confirmation de déconnexion](Screenshots/deconnexion.png)
 
 ---
 
