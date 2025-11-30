@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des Employés</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    
+    <div id="welcomeScreen" class="welcome-screen">
+        <div class="welcome-content">
+            <h1 class="welcome-title">Projet de Base de Données Évoluées</h1>
+            <div class="authors-container">
+                <div class="author-card">
+                    <div class="author-avatar">
+                        <img src="imed.png" alt="Imed Zayet">
+                    </div>
+                    <h3>Imed Zayet</h3>
+                </div>
+                <div class="author-card">
+                    <div class="author-avatar">
+                        <img src="maher.png" alt="Maher Bouadila">
+                    </div>
+                    <h3>Maher Bouadila</h3>
+                </div>
+            </div>
+            <p class="click-instruction">Cliquez n'importe où pour continuer</p>
+        </div>
+    </div>
+
+    
+    <div id="curtain" class="curtain"></div>
+
+    
+    <div id="loginScreen" class="login-screen hidden">
+        <div class="login-container">
+            <div class="login-header">
+                <svg class="login-logo" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L2 7V17L12 22L22 17V7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M12 22V12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M22 7L12 12L2 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <h2>Connexion</h2>
+                <p>Système de Gestion des Employés</p>
+            </div>
+            <form id="loginForm" class="login-form">
+                <div class="form-group">
+                    <label for="username">Nom d'utilisateur</label>
+                    <input type="text" id="username" name="username" required autocomplete="username">
+                </div>
+                <div class="form-group">
+                    <label for="password">Mot de passe</label>
+                    <input type="password" id="password" name="password" required autocomplete="current-password">
+                </div>
+                <div id="loginError" class="login-error hidden"></div>
+                <button type="submit" class="login-btn">Se connecter</button>
+            </form>
+        </div>
+    </div>
+
+    
+    <div id="mainApp" class="container hidden">
+        <header>
+            <div class="header-content">
+                <div class="logo-container">
+                    <svg class="logo-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2L2 7V17L12 22L22 17V7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 22V12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M22 7L12 12L2 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M17 14.5V9.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <circle cx="17" cy="7" r="1.5" fill="currentColor"/>
+                    </svg>
+                </div>
+                <h1>Système de Gestion des Employés</h1>
+                <button onclick="logout()" class="logout-btn" title="Déconnexion">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <polyline points="16 17 21 12 16 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <line x1="21" y1="12" x2="9" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span>Déconnexion</span>
+                </button>
+            </div>
+            <div class="stats-bar" id="statsBar">
+                <div class="stat-card">
+                    <span class="stat-label">Total Employés</span>
+                    <span class="stat-value" id="totalEmployees">0</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Avec Prime</span>
+                    <span class="stat-value" id="withPrime">0</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Prime Moyenne</span>
+                    <span class="stat-value" id="avgPrime">0€</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Ancienneté Moyenne</span>
+                    <span class="stat-value" id="avgAnciennete">0 ans</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="main-content">
+            
+            <aside class="sidebar">
+                <div class="nav-section">
+                    <h3><svg class="icon-chart" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/><rect x="14" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/><rect x="14" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/><rect x="3" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/></svg> Requêtes Prédéfinies</h3>
+                    <button onclick="getAllEmployees()" class="nav-btn">Tous les employés</button>
+                    <button onclick="getCollections()" class="nav-btn">Collections de la base</button>
+                    <button onclick="getCount()" class="nav-btn">Compter les documents</button>
+                    <button onclick="getPrenomStartsD()" class="nav-btn">Prénom commence par D</button>
+                    <button onclick="getPrenomDStartOrEnd()" class="nav-btn">Prénom D début/fin</button>
+                    <button onclick="getPrenomD6Chars()" class="nav-btn">Prénom D + 6 caractères</button>
+                    <button onclick="getAncienneteGt10()" class="nav-btn">Ancienneté > 10</button>
+                    <button onclick="getWithRue()" class="nav-btn">Employés avec rue</button>
+                    <button onclick="getTop10Anciens()" class="nav-btn">10 plus anciens</button>
+                    <button onclick="getVilleToulouse()" class="nav-btn">Ville: Toulouse</button>
+                    <button onclick="getPrenomMVilleBdxParis()" class="nav-btn">Prénom M + Bdx/Paris</button>
+                </div>
+            </aside>
+
+            
+            <main class="content-area">
+                <div class="action-bar">
+                    <div class="primary-actions">
+                        <button onclick="showAddEmployeeForm()" class="action-btn primary-action">
+                            <span class="btn-icon"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M12 8V16M8 12H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+                            <span>Ajouter Employé</span>
+                        </button>
+                        <button onclick="incrementPrime()" class="action-btn secondary-action">
+                            <span class="btn-icon"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></span>
+                            <span>Incrémenter Primes</span>
+                        </button>
+                    </div>
+                    
+                    <div class="mapreduce-section">
+                        <div class="section-label">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 3V21H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M7 14L12 9L16 13L21 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            <span>Analyses MapReduce</span>
+                        </div>
+                        <div class="mapreduce-grid">
+                            <button onclick="getEmployeesByCity()" class="mapreduce-card">
+                                <span class="card-icon"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 21H21M5 21V7L13 3V21M19 21V11L13 7M9 9V9.01M9 12V12.01M9 15V15.01M9 18V18.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+                                <span class="card-label">Employés/Ville</span>
+                            </button>
+                            <button onclick="getAvgPrimeByCity()" class="mapreduce-card">
+                                <span class="card-icon"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="5" width="20" height="14" rx="2" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/><path d="M6 12H8M16 12H18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+                                <span class="card-label">Prime Moy/Ville</span>
+                            </button>
+                            <button onclick="getAvgAncienneteByCity()" class="mapreduce-card">
+                                <span class="card-icon"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/><path d="M3 10H21M8 2V6M16 2V6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+                                <span class="card-label">Ancienneté Moy/Ville</span>
+                            </button>
+                            <button onclick="showCustomMapReduce()" class="mapreduce-card custom">
+                                <span class="card-icon"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M15 9L12 12L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                                <span class="card-label">MapReduce Perso</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="toolbar">
+                    <div class="search-box">
+                        <input type="text" id="searchInput" placeholder="🔍 Rechercher par nom ou prénom...">
+                        <button onclick="searchEmployees()" class="btn-primary">Rechercher</button>
+                    </div>
+                    <div class="sort-controls">
+                        <label>Trier par:</label>
+                        <select id="sortField">
+                            <option value="nom">Nom</option>
+                            <option value="prenom">Prénom</option>
+                            <option value="anciennete">Ancienneté</option>
+                            <option value="prime">Prime</option>
+                            <option value="adresse.ville">Ville</option>
+                        </select>
+                        <select id="sortOrder">
+                            <option value="1">Croissant</option>
+                            <option value="-1">Décroissant</option>
+                        </select>
+                        <button onclick="applySorting()" class="btn-secondary">Appliquer</button>
+                    </div>
+                </div>
+
+                <div class="results-header">
+                    <h2 id="resultsTitle">Résultats</h2>
+                    <span id="resultsCount" class="results-count">0 résultat(s)</span>
+                </div>
+
+                <div id="resultsContainer" class="results-container">
+                    <div class="empty-state">
+                        <p>👈 Sélectionnez une requête dans le menu</p>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    
+    <div id="employeeModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle">Ajouter un Employé</h2>
+            <form id="employeeForm" onsubmit="submitEmployee(event)">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Nom *</label>
+                        <input type="text" id="nom" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Prénom *</label>
+                        <input type="text" id="prenom" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Prime (€)</label>
+                        <input type="number" id="prime" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label>Ancienneté (années)</label>
+                        <input type="number" id="anciennete" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label>Rue</label>
+                        <input type="text" id="rue">
+                    </div>
+                    <div class="form-group">
+                        <label>Ville</label>
+                        <input type="text" id="ville">
+                    </div>
+                    <div class="form-group">
+                        <label>Code Postal</label>
+                        <input type="text" id="codePostal">
+                    </div>
+                    <div class="form-group">
+                        <label>Pays</label>
+                        <input type="text" id="pays" value="France">
+                    </div>
+                </div>
+                <input type="hidden" id="employeeId">
+                <div class="form-actions">
+                    <button type="button" onclick="closeModal()" class="btn-secondary">Annuler</button>
+                    <button type="submit" class="btn-primary">Enregistrer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    
+    <div id="customMapReduceModal" class="modal modal-custom-mapreduce">
+        <div class="modal-content">
+            <div class="modal-header-custom">
+                <div>
+                    <h2>⚙️ MapReduce Personnalisé</h2>
+                    <p class="modal-description">Configurez votre opération MapReduce personnalisée</p>
+                </div>
+                <span class="close" onclick="closeCustomMapReduce()">&times;</span>
+            </div>
+            
+            <div class="modal-body-content">
+                <div class="form-section">
+                    <h3>Grouper par</h3>
+                    <select id="customGroupBy" class="form-control">
+                        <option value="adresse.ville">Ville</option>
+                        <option value="adresse.pays">Pays</option>
+                        <option value="nom">Nom</option>
+                        <option value="prenom">Prénom</option>
+                    </select>
+                </div>
+
+                <div class="form-section">
+                    <h3>Opérations</h3>
+                    <div class="checkbox-grid">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="op_count" value="count" checked>
+                            <span>Compter</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="op_sum" value="sum">
+                            <span>Somme</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="op_avg" value="avg">
+                            <span>Moyenne</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="op_min" value="min">
+                            <span>Minimum</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="op_max" value="max">
+                            <span>Maximum</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>Champ de calcul (pour somme, moyenne, min, max)</h3>
+                    <select id="customValueField" class="form-control">
+                        <option value="prime">Prime</option>
+                        <option value="anciennete">Ancienneté</option>
+                    </select>
+                </div>
+
+                <div class="form-section">
+                    <h3>Trier par</h3>
+                    <div class="sort-section">
+                        <select id="customSortBy" class="form-control">
+                            <option value="_id">Groupe</option>
+                            <option value="count">Nombre</option>
+                            <option value="sum">Somme</option>
+                            <option value="avg">Moyenne</option>
+                            <option value="min">Minimum</option>
+                            <option value="max">Maximum</option>
+                        </select>
+                        <select id="customSortOrder" class="form-control">
+                            <option value="1">Croissant</option>
+                            <option value="-1">Décroissant</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" onclick="closeCustomMapReduce()" class="btn-secondary">Annuler</button>
+                <button type="button" onclick="executeCustomMapReduce()" class="btn-primary">▶️ Exécuter</button>
+            </div>
+        </div>
+    </div>
+
+    
+    <div id="incrementPrimeModal" class="modal">
+        <div class="modal-content modal-compact">
+            <span class="close" onclick="closeIncrementPrimeModal()">&times;</span>
+            <div class="modal-icon-header">
+                <div class="modal-icon-circle orange">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <h2>Incrémenter les Primes</h2>
+                <p class="modal-subtitle">Augmentez les primes de tous les employés</p>
+            </div>
+            <form id="incrementPrimeForm" onsubmit="submitIncrementPrime(event)">
+                <div class="form-group-inline">
+                    <label for="primeAmount">Montant à ajouter (€)</label>
+                    <div class="input-with-icon">
+                        <input type="number" id="primeAmount" min="1" step="0.01" required placeholder="Ex: 500">
+                        <span class="input-icon">€</span>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                        <path d="M12 16V12M12 8H12.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    <span>Ce montant sera ajouté à la prime actuelle de chaque employé</span>
+                </div>
+                <div class="form-actions">
+                    <button type="button" onclick="closeIncrementPrimeModal()" class="btn-secondary">Annuler</button>
+                    <button type="submit" class="btn-primary">✓ Confirmer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    
+    <div id="logoutModal" class="modal">
+        <div class="modal-content modal-compact">
+            <span class="close" onclick="closeLogoutModal()">&times;</span>
+            <div class="modal-icon-header">
+                <div class="modal-icon-circle red">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <polyline points="16 17 21 12 16 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <line x1="21" y1="12" x2="9" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <h2>Confirmer la déconnexion</h2>
+                <p class="modal-subtitle">Êtes-vous sûr de vouloir vous déconnecter ?</p>
+            </div>
+            <div class="form-actions">
+                <button type="button" onclick="closeLogoutModal()" class="btn-secondary">Annuler</button>
+                <button type="button" onclick="confirmLogout()" class="btn-danger">Déconnexion</button>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
